@@ -1,0 +1,23 @@
+<resources>
+
+    <array name="condicao">
+        <item>--Selecione Estado--</item>
+        <item>Operacional</item>
+        <item>Avariado</item>
+    </array>
+
+    <array name="funcionarios">
+        <item>--Selecione Colaborador--</item>
+        <item>Inacio Sacataria</item>
+        <item>Raul Matsinhe</item>
+        <item>Alcina Mauricio</item>
+        <item>Gabriel Nhachengo</item>
+        <item>Jessica</item>
+        <item>Luzepio Nhachengo</item>
+    </array>
+
+    <string name="app_name">Microtic</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lorem_ipsum_is_simply_dummy_text_of_the_printing_and_typesetting_industry_lorem_ipsum_has_been_the_industry_s_standard_dummy_text_ever_since_the_1500s_when_an_unknown_printer_took_a_galle">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galle</string>
+</resources>

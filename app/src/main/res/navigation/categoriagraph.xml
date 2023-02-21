@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/categoriagraph"
+    app:startDestination="@id/categoriaFragment">
+
+    <fragment
+        android:id="@+id/categoriaFragment"
+        android:name="com.decode.microtic.ui.fragments.CategoriaFragment"
+        android:label="CategoriaFragment"
+        tools:layout="@layout/fragment_categoria">
+        <action
+            android:id="@+id/action_categoriaFragment_to_addCategoriaFragment"
+            app:destination="@id/addCategoriaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCategoriaFragment"
+        android:name="com.decode.microtic.ui.fragments.AddCategoriaFragment"
+        android:label="AddCategoriaFragment"
+        tools:layout="@layout/fragment_add_categoria"/>
+    <fragment
+        android:id="@+id/categoriaProdutoFragment"
+        android:name="com.decode.microtic.ui.fragments.CategoriaProdutoFragment"
+        android:label="CategoriaProdutoFragment"
+        tools:layout="@layout/fragment_categoria_produto"/>
+
+
+</navigation>

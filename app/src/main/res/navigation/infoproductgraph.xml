@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/infoproductgraph"
+    app:startDestination="@id/infoProductFragment">
+
+    <fragment
+        android:id="@+id/infoProductFragment"
+        android:name="com.decode.microtic.ui.fragments.InfoProductFragment"
+        android:label="InfoProductFragment"
+        tools:layout="@layout/fragment_info_product"/>
+    <fragment
+        android:id="@+id/alocacoesFragment2"
+        android:name="com.decode.microtic.ui.fragments.AlocacoesFragment"
+        android:label="AlocacoesFragment"
+        tools:layout="@layout/fragment_alocacoes"/>
+    <fragment
+        android:id="@+id/photoFragment2"
+        android:name="com.decode.microtic.ui.fragments.PhotoFragment"
+        android:label="PhotoFragment"
+        tools:layout="@layout/fragment_photo"/>
+    <fragment
+        android:id="@+id/alocacoesListFragment2"
+        android:name="com.decode.microtic.ui.fragments.AlocacoesListFragment"
+        android:label="AlocacoesListFragment"
+        tools:layout="@layout/fragment_alocacoes_list"/>
+    <fragment
+        android:id="@+id/fullScreenImageFragment"
+        android:name="com.decode.microtic.ui.fragments.FullScreenImageFragment"
+        android:label="FullScreenImageFragment" />
+    <fragment
+        android:id="@+id/choosePhotoFrgment2"
+        android:name="com.decode.microtic.ui.fragments.ChoosePhotoFrgment"
+        android:label="fragment_choose_photo_frgment"
+        tools:layout="@layout/fragment_choose_photo_frgment" />
+
+
+</navigation>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mhomeFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/mqrFragment"
+        android:title="QR Scan"
+        android:icon="@drawable/ic_scann"/>/>
+    <item
+        android:id="@+id/responsabilityFragment"
+        android:title="workers"
+        android:icon="@drawable/ic_work"/>
+</menu>

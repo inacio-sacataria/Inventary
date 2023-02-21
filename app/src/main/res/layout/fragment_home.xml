@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+   <androidx.coordinatorlayout.widget.CoordinatorLayout
+   android:layout_width="match_parent"
+   android:layout_height="match_parent">
+
+   <com.google.android.material.appbar.AppBarLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+      <com.google.android.material.appbar.MaterialToolbar
+          android:id="@+id/topAppBar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          app:title="Invetário"
+          app:menu="@menu/menu_home"
+          />
+
+   </com.google.android.material.appbar.AppBarLayout>
+
+   <!-- Note: A RecyclerView can also be used -->
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+         <LinearLayout
+             android:id="@+id/linearLayout2"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="16dp"
+             android:layout_marginEnd="16dp"
+             android:background="@drawable/searchview_background"
+             android:gravity="center_vertical"
+             android:minHeight="57dp"
+             android:orientation="horizontal"
+             android:paddingStart="8dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/edit_pesquisa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/white"
+                android:hint="Pesquisa"
+                android:paddingStart="8dp" />
+         </LinearLayout>
+
+         <LinearLayout
+             android:id="@+id/linearLayout4"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="16dp"
+
+             android:layout_marginTop="24dp"
+             android:visibility="gone"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categoria"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtSeeAllCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="16dp"
+                android:text="ver todos"
+                android:textAlignment="textEnd"
+                android:textColor="#A1A1A1"
+                android:textStyle="bold" />
+
+         </LinearLayout>
+
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/rcvCategorias"
+             android:layout_width="match_parent"
+             android:visibility="gone"
+             android:layout_height="wrap_content"
+             tools:listitem="@layout/catgoriasitem"
+             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+             android:orientation="horizontal"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+         <LinearLayout
+             android:id="@+id/lytProdutsButton"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="16dp"
+
+             android:layout_marginTop="16dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activos"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="16dp"
+                android:text="ver todos"
+                android:textAlignment="textEnd"
+                android:textColor="#A1A1A1"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+         </LinearLayout>
+
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/rcvProduts"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="8dp"
+             android:orientation="vertical"
+             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/lytProdutsButton"
+             tools:listitem="@layout/produtitem" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+   </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>

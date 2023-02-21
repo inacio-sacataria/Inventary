@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="16dp"
+    android:layout_height="80dp">
+
+    <LinearLayout
+        android:id="@+id/btnLayoutWorker"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtWorkerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Inacio Sacataria"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+</layout>

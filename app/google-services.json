@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "959597266003",
+    "project_id": "microtic-63936",
+    "storage_bucket": "microtic-63936.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959597266003:android:6aed16153dfa8be44cb2a6",
+        "android_client_info": {
+          "package_name": "com.decode.microtic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959597266003-n172l0retk6nlldakb12e77eqddj8044.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.decode.microtic",
+            "certificate_hash": "f467380423ddcaa882702ba54985cb2b1e2a54d8"
+          }
+        },
+        {
+          "client_id": "959597266003-oljjet4oei6s6mpp8burt8vluh27qvb8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCISmPeYzJjz1VG_6IJUZ9z3Zznli72HkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959597266003-oljjet4oei6s6mpp8burt8vluh27qvb8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -62,36 +62,9 @@ class RegistDevicesViewModel : ViewModel() {
     }
 
     fun update(
-        Id: String,
-        Qr: String,
-        marca: String,
-        modelo: String,
-        price: String,
-        descricao: String,
-        tipo: String,
-        dataDeAquisicao: String,
-        dataGarantia: String,
-        serie: String,
-        condicao: String,
-        photoUrls: List<String>,
-        nomeProduto: String
+       device: Devices
     ) {
         viewModelScope.launch {
-            var device = Devices(
-                id= Id,
-                qrCode = Qr,
-                marca = marca,
-                modelo = modelo,
-                priceDeAquisicao = price,
-                decricao = descricao,
-                tipo = tipo,
-                dataDeAquisicao = dataDeAquisicao,
-                dataDeGarantia = dataGarantia,
-                serie = serie,
-                photoUrls = photoUrls,
-                condicoes = condicao,
-                nomeProduto = nomeProduto
-            )
             deviceClicked = device
             Log.d("deviceUpdate", device.marca.toString())
             repositories.update(device)

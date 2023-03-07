@@ -13,14 +13,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.decode.microtic.MainActivity
 import com.decode.microtic.R
+import com.decode.microtic.data.adapters.PhotosItemAdapter
 import com.decode.microtic.data.models.Devices
 import com.decode.microtic.databinding.FragmentPhotoBinding
 import com.decode.microtic.showInfo
 import com.decode.microtic.ui.viewmodels.RegistDevicesViewModel
+import com.decode.microtic.utils.Contants
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -37,7 +42,7 @@ class ChoosePhotoFrgment : Fragment() {
     lateinit var binding : FragmentPhotoBinding
     var documentUrl: String=""
     lateinit var viewModel: RegistDevicesViewModel
-    var fotos = mutableListOf<String>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,17 +53,38 @@ class ChoosePhotoFrgment : Fragment() {
         viewModel = ViewModelProvider(this).get(RegistDevicesViewModel::class.java)
 
         binding.btnScanDoc.setOnClickListener {
-            selectImage()
+            // Registers a photo picker activity launcher in single-select mode.
+            findNavController().navigate(R.id.photoPickerFragment)
+            //chooseFromPhotoPicker()
+            //selectImage()
         }
+       //Contants.mutablePhotosUrl.value = Contants.urls
+        var adapter = PhotosItemAdapter(Contants.mutablePhotosUrl, requireContext())
+        binding.rcvFotos.adapter = adapter
+        adapter.notifyDataSetChanged()
+
+
+            if(Contants.mutablePhotosUrl.size!! >0) {
+                var adapter = PhotosItemAdapter(Contants.mutablePhotosUrl, requireContext())
+                binding.rcvFotos.adapter = adapter
+                adapter.notifyDataSetChanged()
+                binding.imgDoc.visibility = View.INVISIBLE
+        }
+
         binding.btnContinue.setOnClickListener {
-            if (fotos.size!=0){
+            if (Contants.mutablePhotosUrl.size!=0){
                 var device = requireActivity().intent.getParcelableExtra<Devices>("device")
                 runBlocking{
                     if (device==null) {
-                        viewModel.addPhotoUrl(fotos)
+                        viewModel.addPhotoUrl(Contants.mutablePhotosUrl)
                     }else{
-                        device.photoUrls = fotos
+
+                        var allphotos = mutableListOf<String>()
+                        device.photoUrls.forEach { allphotos.add(it) }
+                        Contants.mutablePhotosUrl.forEach { allphotos.add(it) }
+                        device.photoUrls = allphotos
                         viewModel.updatePhotoUrl(device)
+
                     }
                 }
                 var intent = Intent(requireActivity(), MainActivity::class.java)
@@ -105,7 +131,7 @@ class ChoosePhotoFrgment : Fragment() {
         storageRef.putFile(imageURI).addOnSuccessListener {
 
             storageRef.downloadUrl.addOnSuccessListener {
-                fotos.add(it.toString())
+                Contants.mutablePhotosUrl.add(it.toString())
                 GlobalScope.launch(Dispatchers.Main){
                     Glide
                     .with(requireActivity())
@@ -113,6 +139,7 @@ class ChoosePhotoFrgment : Fragment() {
                         .into(binding.imgDoc)
                 }
                 if (progressDialog.isShowing) progressDialog.dismiss()
+                binding.btnScanDoc.setText("Carregar mais fotos")
             }.addOnFailureListener {
                 requireActivity().showInfo("Failed to download")
             }
@@ -122,6 +149,8 @@ class ChoosePhotoFrgment : Fragment() {
             Toast.makeText(requireContext(), "failed upload", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
     fun uploadtoFirebase(bb: ByteArray){
         val progressDialog= ProgressDialog(requireActivity())
@@ -138,7 +167,7 @@ class ChoosePhotoFrgment : Fragment() {
 
             if (it.task.isSuccessful){
                 storageRef.downloadUrl.addOnSuccessListener {
-                    fotos.add( it.toString())
+                    Contants.mutablePhotosUrl.add( it.toString())
                     Toast.makeText(requireContext(), "complete upload", Toast.LENGTH_SHORT).show()
                     if (progressDialog.isShowing) progressDialog.dismiss()
                 }.addOnFailureListener {
@@ -151,7 +180,45 @@ class ChoosePhotoFrgment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
+    override fun onResume() {
+        super.onResume()
+
+                if (Contants.isDone)
+                    binding.imgDoc.setImageResource(R.drawable.done)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (Contants.isDone)
+            binding.imgDoc.setImageResource(R.drawable.done)
+    }
+
+
+
+    fun chooseFromPhotoPicker(){
+        val pickMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(10)) { uris ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uris.isNotEmpty()) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    uris.forEach {
+                        Log.d("PhotoPickerUri", "Number of items selected: ${it}")
+                        pickerImageUpload(it)
+                    }
+                }
+            } else {
+                Log.d("PhotoPickerUri", "No media selected")
+            }
+        }
+
+        // Launch the photo picker and allow the user to choose only images.
+        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
     var bitmap: Bitmap? = null
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -175,6 +242,23 @@ class ChoosePhotoFrgment : Fragment() {
         }else{
             Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun pickerImageUpload(uri: Uri){
+            var imageURI= uri
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver,imageURI) as Bitmap
+                var bytes : ByteArrayOutputStream = ByteArrayOutputStream()
+                bitmap!!.compress(Bitmap.CompressFormat.JPEG,50,bytes)
+                binding.imgDoc.setImageBitmap(bitmap)
+                if (imageURI != null) {
+                    uploadImage(imageURI)
+                }
+            }catch (e: IOException){
+                Log.d("upload", "photo not uploaded ${e.message}")
+            }
+
     }
 
     companion object{

@@ -33,7 +33,7 @@ class QrFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_qr, container, false)
         viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
 
-       checkPermission(
+        checkPermission(
             Manifest.permission.CAMERA,
             CAMERA_REQUEST_CODE
         )
@@ -47,66 +47,86 @@ class QrFragment : Fragment() {
         codeScanner = CodeScanner(activity, scannerView)
         codeScanner.decodeCallback = DecodeCallback {
             activity.runOnUiThread {
-                var text = it.text.split("Série:").get(1)
-                var result = viewModel.verifyQR(text);
+                if (it.text.contains("Série:")) {
+                    var text = it?.text?.split("Série:")?.get(1)
+                    if (!text.isNullOrEmpty()) {
+                        if (!text.isNullOrEmpty()) {
 
-                if (result==null){
-                    var intent = Intent(requireActivity(), Registrationctivity::class.java)
-                    intent.putExtra("qrCode", text)
-                    startActivity(intent)
+                            var result = viewModel.verifyQR(text);
+
+                            if (result == null) {
+                                var intent =
+                                    Intent(requireActivity(), Registrationctivity::class.java)
+                                intent.putExtra("qrCode", text)
+                                startActivity(intent)
+                            } else {
+                                var intent =
+                                    Intent(requireActivity(), InfoProductActivity::class.java)
+                                intent.putExtra("device", result)
+                                deviceClicked = result
+                                startActivity(intent)
+                            }
+                        }
+                    }
                 }else{
-                    var intent = Intent(requireActivity(), InfoProductActivity::class.java)
-                    intent.putExtra("device", result)
-                    deviceClicked = result
-                    startActivity(intent)
+                    Toast.makeText(requireContext(), " ESTE QRCODE NAO PERTENCE\nA MICROTIC", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }
-        scannerView.setOnClickListener {
-            codeScanner.startPreview()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        codeScanner.startPreview()
-    }
-
-    override fun onPause() {
-        codeScanner.releaseResources()
-        super.onPause()
-    }
-
-
-    private fun checkPermission(permission: String, requestCode: Int){
-        if(ContextCompat.checkSelfPermission(requireContext(),permission)== PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission),requestCode  )
-        }else{
-
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode== CAMERA_REQUEST_CODE){
-            if (grantResults.isNotEmpty() && grantResults[0]== PackageManager.PERMISSION_GRANTED ){
-
-            }else{
-                Toast.makeText(requireContext(), "premission denied", Toast.LENGTH_SHORT ).show()
+            scannerView.setOnClickListener {
+                codeScanner.startPreview()
             }
         }
-    }
 
-    companion object {
-        val CODE_PROFILE = 3
-        val REQUEST_CODE_PROFILE = 100
-        val CODE_DOCUMENT_FROM_CAMERA = 2
-        val REQUEST_CODE_DOCUMENT_FROM_CAMERA = 101
-        var CAMERA_REQUEST_CODE= 123
-    }
+        override fun onResume() {
+            super.onResume()
+            codeScanner.startPreview()
+        }
 
-}
+        override fun onPause() {
+            codeScanner.releaseResources()
+            super.onPause()
+        }
+
+
+        private fun checkPermission(permission: String, requestCode: Int) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    permission
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(permission),
+                    requestCode
+                )
+            } else {
+
+            }
+        }
+
+        override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+        ) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    Toast.makeText(requireContext(), "premission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        companion object {
+            val CODE_PROFILE = 3
+            val REQUEST_CODE_PROFILE = 100
+            val CODE_DOCUMENT_FROM_CAMERA = 2
+            val REQUEST_CODE_DOCUMENT_FROM_CAMERA = 101
+            var CAMERA_REQUEST_CODE = 123
+        }
+
+    }

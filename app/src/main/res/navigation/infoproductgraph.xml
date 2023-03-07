@@ -34,6 +34,11 @@
         android:name="com.decode.microtic.ui.fragments.ChoosePhotoFrgment"
         android:label="fragment_choose_photo_frgment"
         tools:layout="@layout/fragment_choose_photo_frgment" />
+    <fragment
+        android:id="@+id/photoPickerFragment"
+        android:name="com.decode.microtic.ui.fragments.PhotoPickerFragment"
+        android:label="fragment_photo_picker"
+        tools:layout="@layout/fragment_photo_picker" />
 
 
 </navigation>

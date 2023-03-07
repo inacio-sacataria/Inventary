@@ -1,5 +1,6 @@
 package com.decode.microtic.utils
 
+import androidx.lifecycle.MutableLiveData
 import com.decode.microtic.data.models.Alocacoes
 import com.decode.microtic.data.models.Categorias
 import com.decode.microtic.data.models.Devices
@@ -9,4 +10,7 @@ object Contants {
     var allDevices = mutableListOf<Devices>()
     var allAlocacoes = mutableListOf<Alocacoes>()
     var workers = arrayOf("Raul Matsinhe", "Gabriel Nhachengo", "Alcina Mauricio", "Jessica Cossa", "Luzepio Nhachengo","Inacio Sacataria")
+    var mutablePhotosUrl = mutableListOf<String>()
+    var isDone = false
+
 }

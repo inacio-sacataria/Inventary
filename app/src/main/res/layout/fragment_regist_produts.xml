@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@drawable/editext_background"
-                    android:hint="Marca"
+                    android:hint="Marca (opcional)"
                     android:minHeight="48dp"
                     android:paddingStart="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +99,7 @@
                     android:layout_height="48dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/editext_background"
-                    android:hint="modelo"
+                    android:hint="modelo (opcional)"
                     android:minHeight="48dp"
                     android:paddingStart="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -142,6 +142,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:paddingBottom="16dp"
                 android:layout_height="match_parent">
 
                 <EditText
@@ -190,12 +191,28 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@drawable/editext_background"
-                    android:hint="Serie"
+                    android:hint="Serie (opcional)"
                     android:minHeight="48dp"
                     android:paddingStart="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/spinnerCondicao" />
+
+
+                <Spinner
+                    android:id="@+id/spinnerDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:entries="@array/date"
+
+                    android:background="@drawable/editext_background"
+                    android:hint="spinner"
+                    android:minHeight="48dp"
+                    android:paddingStart="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lyt_emission_date" />
 
                 <LinearLayout
 
@@ -204,9 +221,7 @@
                     android:layout_height="48dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/editext_background"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/lyt_expire_date"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/edt_serie">
@@ -214,10 +229,10 @@
                     <TextView
                         android:id="@+id/edt_data_aquisicao"
                         android:layout_width="wrap_content"
-
+                        android:textSize="14sp"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
-                        android:hint="data de Aquisição"
+                        android:hint="Data de Aquisição"
                         android:inputType="date"
                         android:minHeight="48dp"
                         android:paddingStart="12dp" />
@@ -229,19 +244,20 @@
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_margin="16dp"
+                    android:visibility="gone"
                     android:background="@drawable/editext_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/lyt_emission_date"
-                    app:layout_constraintTop_toBottomOf="@+id/edt_serie">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerDate">
 
                     <TextView
                         android:id="@+id/edt_garantia_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
-                        android:hint="data de garantia"
+                        android:hint="Data de Garantia"
                         android:inputType="date"
                         android:minHeight="48dp"
                         android:paddingStart="12dp" />

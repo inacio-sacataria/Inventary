@@ -29,7 +29,7 @@ import com.decode.microtic.ui.viewmodels.HomeFragmentViewModel
 
 
 class ScanFragment : Fragment() {
-    lateinit var binding : FragmentScanBinding
+    lateinit var binding: FragmentScanBinding
     private lateinit var codeScanner: CodeScanner
     lateinit var viewModel: HomeFragmentViewModel
 
@@ -46,8 +46,6 @@ class ScanFragment : Fragment() {
             Manifest.permission.CAMERA,
             QrFragment.CAMERA_REQUEST_CODE
         )
-
-
 
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -70,13 +68,22 @@ class ScanFragment : Fragment() {
         codeScanner = CodeScanner(activity, scannerView)
         codeScanner.decodeCallback = DecodeCallback {
             activity.runOnUiThread {
-                var text = it.text.split("Série:").get(1)
-                var result = viewModel.verifyQR(text);
+                if (it.text.contains("Série:")) {
+                    Toast.makeText(requireContext(), "${it.text} ", Toast.LENGTH_LONG)
+                        .show()
+                    var text = it?.text?.split("Série:")?.get(1)
+                    if (!text.isNullOrEmpty()) {
+                    var result = viewModel.verifyQR(text!!);
 
-                if (result!=null){
-                    requireActivity().intent.putExtra("device", result)
-                    deviceClicked = result
-                   findNavController().navigate(R.id.action_qrFragment2_to_infoFragment)
+                    if (result != null) {
+                        requireActivity().intent.putExtra("device", result)
+                        deviceClicked = result
+                        findNavController().navigate(R.id.action_qrFragment2_to_infoFragment)
+                    }
+                    }
+                }else{
+                    Toast.makeText(requireContext(), " ESTE QRCODE NAO PERTENCE\nA MICROTIC ${it.barcodeFormat}", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }
@@ -96,10 +103,14 @@ class ScanFragment : Fragment() {
     }
 
 
-    private fun checkPermission(permission: String, requestCode: Int){
-        if(ContextCompat.checkSelfPermission(requireContext(),permission)== PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission),requestCode  )
-        }else{
+    private fun checkPermission(permission: String, requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                permission
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permission), requestCode)
+        } else {
 
         }
     }
@@ -110,11 +121,11 @@ class ScanFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode== CAMERA_REQUEST_CODE){
-            if (grantResults.isNotEmpty() && grantResults[0]== PackageManager.PERMISSION_GRANTED ){
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            }else{
-                Toast.makeText(requireContext(), "premission denied", Toast.LENGTH_SHORT ).show()
+            } else {
+                Toast.makeText(requireContext(), "premission denied", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -124,7 +135,7 @@ class ScanFragment : Fragment() {
         val REQUEST_CODE_PROFILE = 100
         val CODE_DOCUMENT_FROM_CAMERA = 2
         val REQUEST_CODE_DOCUMENT_FROM_CAMERA = 101
-        var CAMERA_REQUEST_CODE= 123
+        var CAMERA_REQUEST_CODE = 123
     }
 
 
